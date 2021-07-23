@@ -39,6 +39,8 @@
           type: Array,
           default: []
       }
+  }, {
+      timestamps: true
   });
 
 
