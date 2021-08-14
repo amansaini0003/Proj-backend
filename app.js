@@ -7,7 +7,9 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
+const authRoutes = require("./routes/auth");
 
+// DB Connection
 mongoose
   .connect(process.env.DATABASE, {
     useNewUrlParser: true,
@@ -21,14 +23,19 @@ mongoose
     console.log("DB GOT OOPS...");
   });
 
-  app.use(express.urlencoded({extended: true}));
-  app.use(express.json());
-  app.use(cookieParser());
-  app.use(cors());
+// Middlewares
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors());
 
+// My Routes
+app.use("/api", authRoutes);
 
+// PORT
 const port = process.env.PORT || 8000;
 
+// Starting a server
 app.listen(port, () => {
   console.log(`App is running at port ${port}...`);
 });
