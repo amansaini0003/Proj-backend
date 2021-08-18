@@ -22,9 +22,8 @@ router.post(
   [
     check("email").isEmail().withMessage("email is required"),
     check("password")
-      .isLength({ min: 8 })
-      .withMessage("password field is required")
-      .isLength({ min: 3 }),
+      .isLength({ min: 3 })
+      .withMessage("password field is required"),
   ],
   signin
 );
