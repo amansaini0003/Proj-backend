@@ -69,7 +69,7 @@ exports.signout = (req, res) => {
   });
 };
 
-// protcted routes
+// protected routes
 
 exports.isSignedIn = expressJwt({
   secret: process.env.SECRET,
@@ -82,7 +82,7 @@ exports.isAuthenticated = (req, res, next) => {
   // req.auth -> setup by isSignedIn middleware
   // req.profile._id from front-end === req.auth._id from isSignedIn middleware
 
-  let checker = req.profile && req.auth && req.profile._id === req.auth._id;
+  let checker = req.profile && req.auth && req.profile._id == req.auth._id;
 
   if (!checker) {
     return res.status(403).json({
@@ -95,7 +95,7 @@ exports.isAuthenticated = (req, res, next) => {
 exports.isAdmin = (req, res, next) => {
   if (req.profile.role === 0)
     return res.status(403).json({
-      error: "You are not Admin, ACCESS DENIE, ",
+      error: "You are not Admin, ACCESS DENIED, ",
     });
   next();
 };
