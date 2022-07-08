@@ -4,10 +4,10 @@ const _ = require("lodash");
 const fs = require("fs"); //file system
 
 exports.getProductById = (req, res, next, id) => {
-  Product.findById()
+  Product.findById(id)
     .populate("category")
     .exec((err, product) => {
-      if (err) {
+      if (err || !product) {
         return res.status(400).json({
           errorMessage: "No product was found in DB",
         });
@@ -119,18 +119,25 @@ exports.updateProduct = (req, res) => {
 };
 
 exports.removeProduct = (req, res) => {
-  let product = req.product;
-  product.remove((err, removedProduct) => {
-    if (err) {
-      return res.status(400).json({
-        errorMessage: "Failed to delete the product!",
-      });
+  try {
+    let product = req.product;
+    if (!product) {
+      return res.send("No product Found");
     }
-    res.json({
-      message: `${removedProduct.name} Deleted Successfully`,
-      removedProduct,
+    product.remove((err, removedProduct) => {
+      if (err || !removedProduct) {
+        return res.status(400).json({
+          errorMessage: "Failed to delete the product!",
+        });
+      }
+      res.json({
+        message: `${removedProduct.name} Deleted Successfully`,
+        removedProduct,
+      });
     });
-  });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 //product listing

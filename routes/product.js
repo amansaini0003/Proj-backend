@@ -31,7 +31,7 @@ router.post(
 
 //read
 router.get("/product/:productId", getProduct);
-router.get("/product/photo/:productid", photo);
+router.get("/product/photo/:productId", photo);
 
 // update
 router.put(
